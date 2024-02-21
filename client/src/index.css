@@ -21,3 +21,6 @@ code {
 .navbar-brand{
   color: white !important;
 }
+.navbar-nav{
+  margin-left: auto !important;
+}

@@ -3,9 +3,9 @@ import React from 'react'
 function Navbar() {
   return (
     <div>
-      <nav className="navbar navbar-expand-lgt">
+      <nav className="navbar navbar-expand-lg">
         <a className="navbar-brand" href="#">
-          Navbar
+          SuiteSpot
         </a>
         <button
           className="navbar-toggler"
@@ -22,22 +22,12 @@ function Navbar() {
           <ul className="navbar-nav">
             <li className="nav-item active">
               <a className="nav-link" href="#">
-                Home <span className="sr-only">(current)</span>
+                Register
               </a>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="#">
-                Features
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                Pricing
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link disabled" href="#">
-                Disabled
+                Login
               </a>
             </li>
           </ul>
