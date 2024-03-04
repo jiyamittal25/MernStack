@@ -1,12 +1,23 @@
-import './App.css';
-import Navbar from './components/Navbar';
+import React from "react";
+import Navbar from "./components/Navbar";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-function App() {
+import Homescreen from "./screens/homescreen";
+
+const App = () => {
   return (
-    <div className="App">
-      <Navbar/>
-    </div>
+    <>
+      <Router>
+        {" "}
+        <div className="App">
+          <Navbar />
+          <Routes>
+            <Route path="/home" exact Component={Homescreen} />
+          </Routes>
+        </div>
+      </Router>
+    </>
   );
-}
+};
 
 export default App;
