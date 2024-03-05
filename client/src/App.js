@@ -1,17 +1,29 @@
 import './App.css';
 import Navbar from './components/Navbar';
-import Loader from './components/Loader';
-import Success from './components/Success';
-import Error from './components/Error';
+import React from "react";
+import Navbar from "./components/Navbar";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import "./App.css";
+import Homescreen from "./screens/homescreen";
+import Bookingscreen from "./screens/Bookingscreen";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-     <Success/>
-     <Error/>
-      {/* <Navbar/> */}
-    </div>
+
+    <>
+      <Router>
+        {" "}
+        <div className="App">
+          <Navbar />
+          <Routes>
+            <Route path="/home" exact Component={Homescreen} />
+            <Route path="/booking" exact Component={Bookingscreen} />
+          </Routes>
+        </div>
+      </Router>
+    </>
+
   );
-}
+};
 
 export default App;
