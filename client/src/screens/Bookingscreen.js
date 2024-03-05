@@ -1,6 +1,7 @@
 import React, {useState,useEffect} from 'react';
 import axios from 'axios';
-
+import Loader from '../components/Loader';
+import Error from '../components/Error';
 const Bookingscreen=(match)=>{
     const [loading,setloading]=useState(true);
     const [error,seterror]=useState();
@@ -44,7 +45,7 @@ const Bookingscreen=(match)=>{
 
     return(
         <div>
-            {loading ? (<h1>Loading....</h1>) : error ? (<h1>Error....</h1>) : 
+            {loading ? (<Loader/>) : room ?
             (<div>
                 <div className='row'>
                     <div className='col-md-5'>
@@ -57,7 +58,7 @@ const Bookingscreen=(match)=>{
 
                 </div>
             </div>
-            )
+            ) :{<Error/>}
             }
         </div>
     );
