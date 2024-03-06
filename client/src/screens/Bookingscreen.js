@@ -10,7 +10,7 @@
 
 //     // useEffect(() => {
 //     //   const fetchData = async () => {
-//     //     try {
+//     //     try { 
 //     //       setloading(true);
 //     //       const response = await axios.post("api/rooms/getroombyid", {
 //     //         roomid: match.params.roomid,
@@ -94,9 +94,11 @@
 
 import React, {useState,useEffect} from 'react';
 import axios from 'axios';
+import Loader from '../components/Loader';
+import Error from '../components/Error';
 import { useParams } from "react-router-dom";
 
-const Bookingscreen = () => {
+const Bookingscreen = (match) => {
   const { roomid } = useParams(); // This hook extracts the 'roomid' parameter from the URL
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
@@ -122,14 +124,15 @@ const Bookingscreen = () => {
     fetchData();
 
     // Include any dependencies used inside the async function in the dependency array of useEffect
-  }, [roomid]); 
-
+  }, [roomid]);
 
   return (
-    <div className='m-5'>
+    <div className="m-5">
       {loading ? (
-        <h1>Loading....</h1>
-      ) : !error ? (
+        <h1>
+          (<Loader />)
+        </h1>
+      ) : error ? (
         <h1>Error....</h1>
       ) : (
         <div>
@@ -172,3 +175,17 @@ const Bookingscreen = () => {
 };
 
 export default Bookingscreen;
+
+
+// import React from 'react';
+
+// const Bookingscreen=(match)=>{
+//   return (
+//     <div>
+//       <h1>Booking screen</h1>
+//       <h1>Room id ={match.params.roomid}</h1>
+//     </div>
+//   )
+// }
+
+// export default Bookingscreen;

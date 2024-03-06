@@ -16,7 +16,7 @@ const App = () => {
           <Navbar />
           <Routes>
             <Route path="/home" exact Component={Homescreen} />
-            <Route path="/booking" exact Component={Bookingscreen} />
+            <Route path="/book/:roomid" exact Component={Bookingscreen} />
           </Routes>
         </div>
       </Router>
