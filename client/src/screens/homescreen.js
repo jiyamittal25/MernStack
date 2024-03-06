@@ -34,12 +34,15 @@ const Homescreen = () => {
       <div className="row justify-content-center mt-5">
         {loading ? (
           <Loader />
-        ) : room.length > 1 ? (
+        ) : rooms.length > 1 ? (
           rooms.map((room) => {
-            return;
-            <div className="col-md-9 mt-3">
-              <Room room={room} />
-            </div>;
+            return (
+              <>
+                <div className="col-md-9 mt-3">
+                  <Room room={room} />
+                </div>
+              </>
+            );
           })
         ) : (
           <Error />

@@ -18,9 +18,7 @@ const App = () => {
           <BrowserRouter>
             <Route path="/home" exact Component={Homescreen} />
             <Route path="/booking" exact Component={Bookingscreen} />
-            <Route path='/register' exact Component={Registerscreen}/>
-            <Route path='/login' exact Component={Loginscreen}/>
-          </BrowserRouter>
+          </Routes>
         </div>
       </Router>
     </>

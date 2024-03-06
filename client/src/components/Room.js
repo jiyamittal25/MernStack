@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Button, Carousel } from "react-bootstrap";
+import {Link} from 'react-router-dom';
 
 const Room = (room) => {
 
@@ -23,6 +24,10 @@ const Room = (room) => {
         </b>
 
         <div style={{ float: "right" }}>
+          <Link to={`/book/${room.room._id}`}>
+            <button className="btn btn-primary mr-2">Book Now </button>
+          </Link>
+
           <button className="btn btn-primary" onClick={handleShow}>
             View Details
           </button>

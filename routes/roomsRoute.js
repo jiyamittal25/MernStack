@@ -18,4 +18,19 @@ router.get("/getallrooms", (req, res) => {
   }
 });
 
+router.post("/getroombyid", (req, res) => {
+  const roomid=req.body.roomid;
+  try {
+    // Load the JSON data
+    const roomData = require(roomFilePath);
+
+    // Send the entire room data
+    return res.json({_id:roomid });
+    // const rooms=await Room.findOne({_id:roomid})
+  } catch (err) {
+    console.error("Error fetching rooms:", err);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 module.exports = router;
