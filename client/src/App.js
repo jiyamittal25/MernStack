@@ -3,7 +3,7 @@ import React from "react";
 import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
-import Homescreen from "./screens/Homescreen";
+import Homescreen from "./screens/homescreen";
 import Bookingscreen from "./screens/Bookingscreen";
 
 const App = () => {
