@@ -19,7 +19,7 @@ function Registerscreen()
         console.log(user);
        }
        else{
-        alert("pasword don't match")
+        alert("password don't match")
        }
     }
    return(
@@ -32,7 +32,7 @@ function Registerscreen()
                     onChange={(e)=>{setname(e.target.value)}}/>
                     <input type="text" className="form-control" placeholder="email" value={email} 
                     onChange={(e)=>{setemail(e.target.value)}}/>
-                    <input type="text" className="form-control" placeholder="password"value={pawword} 
+                    <input type="text" className="form-control" placeholder="password"value={password} 
                     onChange={(e)=>{setpassword(e.target.value)}}/>
                     <input type="text" className="form-control" placeholder="confirm password" value={cpassword} 
                     onChange={(e)=>{setcpasssword(e.target.value)}}/>
