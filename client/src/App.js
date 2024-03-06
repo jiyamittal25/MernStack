@@ -3,9 +3,10 @@ import React from "react";
 import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
-import Homescreen from "./screens/Homescreen";
+import Homescreen from "./screens/homescreen";
 import Bookingscreen from "./screens/Bookingscreen";
-
+import Registerscreen from './screens/Registerscreen';
+import Loginscreen from './screens/Loginscreen';
 const App = () => {
   return (
 
@@ -14,10 +15,12 @@ const App = () => {
         {" "}
         <div className="App">
           <Navbar />
-          <Routes>
+          <BrowserRouter>
             <Route path="/home" exact Component={Homescreen} />
             <Route path="/booking" exact Component={Bookingscreen} />
-          </Routes>
+            <Route path='/register' exact Component={Registerscreen}/>
+            <Route path='/login' exact Component={Loginscreen}/>
+          </BrowserRouter>
         </div>
       </Router>
     </>
