@@ -10,7 +10,7 @@
 
 //     // useEffect(() => {
 //     //   const fetchData = async () => {
-//     //     try { 
+//     //     try {
 //     //       setloading(true);
 //     //       const response = await axios.post("api/rooms/getroombyid", {
 //     //         roomid: match.params.roomid,
@@ -49,19 +49,18 @@
 //       }
 //     }, [match.params.roomid]);
 
-
 //     return(
 //       <div>
 //         <h1>Booking screen</h1>
 
 //         {loading ? (<h1>Loading....</h1>) : error ? (<h1>Error....</h1>) : (<div>
-//           <div className='row'> 
+//           <div className='row'>
 //             <div className='col-md-5'>
 //               <h1>{room.name}</h1>
 //               <img src={room.imgurls[0]} className='bigimg' />
 //             </div>
 //             <div className='col-md-5'>
-              
+
 //             </div>
 //           </div>
 //         </div>)}
@@ -88,14 +87,13 @@
 //     //         }
 //     //     </div>
 //     // );
-// }
+// export default Bookingscreen;
 
-// export default Bookingscreen;   
-
-import React, {useState,useEffect} from 'react';
-import axios from 'axios';
-import Loader from '../components/Loader';
-import Error from '../components/Error';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+// import StripeCheckout from "react-stripe-checkout";
+import Loader from "../components/Loader";
+import Error from "../components/Error";
 import { useParams } from "react-router-dom";
 
 const Bookingscreen = (match) => {
@@ -133,7 +131,7 @@ const Bookingscreen = (match) => {
           (<Loader />)
         </h1>
       ) : error ? (
-        <h1>Error....</h1>
+        <Error />
       ) : (
         <div>
           <div className="row justify-content-center mt-5 bs">
@@ -165,6 +163,10 @@ const Bookingscreen = (match) => {
 
               <div style={{ float: "right" }}>
                 <button className="btn btn-primary">Pay Now</button>
+                {/* <StripeCheckout
+                  token={this.onToken}
+                  stripeKey="my_PUBLISHABLE_stripekey"
+                /> */}
               </div>
             </div>
           </div>
@@ -175,7 +177,6 @@ const Bookingscreen = (match) => {
 };
 
 export default Bookingscreen;
-
 
 // import React from 'react';
 
