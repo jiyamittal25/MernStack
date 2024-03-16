@@ -1,192 +1,146 @@
-// import React, {useState,useEffect} from 'react';
-// import axios from 'axios';
-// import Loader from '../components/Loader';
-// import Error from '../components/Error';
-// const Bookingscreen=(match)=>{
-//     const [loading,setloading]=useState(true);
-//     const [error,seterror]=useState();
-//     // const [room,setroom]=useState();
-//     const [room, setroom] = useState({ name: "", imgurls: [] });
-
-//     // useEffect(() => {
-//     //   const fetchData = async () => {
-//     //     try {
-//     //       setloading(true);
-//     //       const response = await axios.post("api/rooms/getroombyid", {
-//     //         roomid: match.params.roomid,
-//     //       });
-//     //       setRoom(response.data);
-//     //     } catch (err) {
-//     //       seterror(true);
-//     //     } finally {
-//     //     setloading(false);
-//     //     }
-//     //   };
-
-//     //   fetchData();
-//     // }, [match.params.roomid]);
-
-//     useEffect(async () => {
-//       try {
-//         setloading(true);
-//         const data = (
-//           await axios.post("api/rooms/getroombyid", {
-//             roomid: match.params.roomid,
-//           })
-//         ).data;
-//         setroom(data);
-
-//         //  const response = await axios.post("api/rooms/getroombyid", {
-//         //    roomid: match.params.roomid
-//         //  });
-//         //  setroom(response.data);
-
-//         setloading(false);
-//       } catch (err) {
-//         setloading(false);
-//         console.log("hello");
-//         seterror(true);
-//       }
-//     }, [match.params.roomid]);
-
-//     return(
-//       <div>
-//         <h1>Booking screen</h1>
-
-//         {loading ? (<h1>Loading....</h1>) : error ? (<h1>Error....</h1>) : (<div>
-//           <div className='row'>
-//             <div className='col-md-5'>
-//               <h1>{room.name}</h1>
-//               <img src={room.imgurls[0]} className='bigimg' />
-//             </div>
-//             <div className='col-md-5'>
-
-//             </div>
-//           </div>
-//         </div>)}
-
-//       </div>
-//     );
-
-//     // return(
-//     //     <div>
-//     //         {loading ? (<Loader/>) : room ?
-//     //         (<div>
-//     //             <div className='row'>
-//     //                 <div className='col-md-5'>
-//     //                     <h1>{room.name}</h1>
-//     //                     <img src={room.imgurls[0]} className="bigimg" / >
-//     //                 </div>
-//     //                 <div className='col-md-5'>
-
-//     //                 </div>
-
-//     //             </div>
-//     //         </div>
-//     //         ) :{<Error/>}
-//     //         }
-//     //     </div>
-//     // );
-// export default Bookingscreen;
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-// import StripeCheckout from "react-stripe-checkout";
+import moment from "moment";
+import StripeCheckout from "react-stripe-checkout";
+import Swal from "sweetalert2";
 import Loader from "../components/Loader";
 import Error from "../components/Error";
-import { useParams } from "react-router-dom";
 
-const Bookingscreen = (match) => {
-  const { roomid } = useParams(); // This hook extracts the 'roomid' parameter from the URL
+function Bookingscreen({ match }) {
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState();
-  const [room, setRoom] = useState({ name: "", imgurls: [] });
+  const [error, setError] = useState("");
+  const [room, setRoom] = useState({});
+  const [totalAmount, setTotalAmount] = useState(0);
+  const [totalDays, setTotalDays] = useState(0);
+
+  const roomid = match.params.roomid;
+  const fromdate = moment(match.params.fromdate, "DD-MM-YYYY");
+  const todate = moment(match.params.todate, "DD-MM-YYYY");
 
   useEffect(() => {
-    const fetchData = async () => {
+    const user = JSON.parse(localStorage.getItem("currentUser"));
+    if (!user) {
+      window.location.href = "/login";
+    }
+    async function fetchMyAPI() {
       try {
+        setError("");
         setLoading(true);
-        const response = await axios.post("api/rooms/getroombyid", {
-          roomid: roomid,
-        });
-        const data = response.data;
+        const data = (
+          await axios.post("/api/rooms/getroombyid", {
+            roomid: match.params.roomid,
+          })
+        ).data;
+        //console.log(data);
         setRoom(data);
-        setLoading(false);
-      } catch (err) {
-        setError(true);
-        setLoading(false);
-        console.log("Error fetching data:", err); // Log the error message
+      } catch (error) {
+        console.log(error);
+        setError(error);
       }
+      setLoading(false);
+    }
+
+    fetchMyAPI();
+  }, []);
+
+  useEffect(() => {
+    const totaldays = moment.duration(todate.diff(fromdate)).asDays() + 1;
+    setTotalDays(totaldays);
+    setTotalAmount(totalDays * room.rentperday);
+  }, [room]);
+
+  const onToken = async (token) => {
+    console.log(token);
+    const bookingDetails = {
+      room,
+      userid: JSON.parse(localStorage.getItem("currentUser"))._id,
+      fromdate,
+      todate,
+      totalAmount,
+      totaldays: totalDays,
+      token,
     };
 
-    fetchData();
-
-    // Include any dependencies used inside the async function in the dependency array of useEffect
-  }, [roomid]);
+    try {
+      setLoading(true);
+      const result = await axios.post("/api/bookings/bookroom", bookingDetails,token);
+      console.log(result);
+      setLoading(false);
+      Swal.fire(
+        "Congratulations",
+        "Your Room Booked Successfully",
+        "success"
+      ).then((result) => {
+        window.location.href = "/home";
+      });
+    } catch (error) {
+      setError(error);
+      Swal.fire("Opps", "Error:" + error, "error");
+    }
+    setLoading(false);
+    //TESTING CARD
+    //https://stripe.com/docs/testing
+    //https://www.npmjs.com/package/react-stripe-checkout
+    // fetch("/save-stripe-token", {
+    //   method: "POST",
+    //   body: JSON.stringify(token),
+    // }).then((response) => {
+    //   response.json().then((data) => {
+    //     alert(`We are in business, ${data.email}`);
+    //   });
+    // });
+  };
 
   return (
     <div className="m-5">
       {loading ? (
-        <h1>
-          (<Loader />)
-        </h1>
-      ) : error ? (
-        <Error />
+        <Loader></Loader>
+      ) : error.length > 0 ? (
+        <Error msg={error}></Error>
       ) : (
-        <div>
-          <div className="row justify-content-center mt-5 bs">
-            <div className="col-md-5">
-              <h1>{room.name}</h1>
-              <img src={room.imgurls[0]} className="bigimg" alt="Room" />
+        <div className="row justify-content-center mt-5 bs">
+          <div className="col-md-6">
+            <h1>{room.name}</h1>
+            <img src={room.imageurls[0]} alt="" className="bigimg" />
+          </div>
+          <div className="col-md-6">
+            <div style={{ textAlign: "right" }}>
+              <h1>Booking Details</h1>
+              <hr />
+              <b>
+                <p>
+                  Name : {JSON.parse(localStorage.getItem("currentUser")).name}
+                </p>
+                <p>From Date : {match.params.fromdate}</p>
+                <p>To Date : {match.params.todate}</p>
+                <p>Max Count : {room.maxcount}</p>
+              </b>
             </div>
-            <div className="col-md-6">
-              <div style={{ textAlign: "right" }}>
-                <h1>Booking Details</h1>
-                <hr />
-                <b>
-                  <p>Name: </p>
-                  <p>From Date </p>
-                  <p>To Date : </p>
-                  <p>Max Count : {room.maxcount}</p>
-                </b>
-              </div>
+            <div style={{ textAlign: "right" }}>
+              <h1>Amount</h1>
+              <hr />
+              <b>
+                <p>Total Days : {totalDays}</p>
+                <p>Rent per day : {room.rentperday}</p>
+                <p>Total Amount : {totalAmount}</p>
+              </b>
+            </div>
 
-              <div style={{ textAlign: "right" }}>
-                <b>
-                  <h1>Amount</h1>
-                  <hr />
-                  <p>Total days : </p>
-                  <p>Rent per day : {room.rentperday}</p>
-                  <p>Total Amount : </p>
-                </b>
-              </div>
-
-              <div style={{ float: "right" }}>
+            <div style={{ float: "right" }}>
+              <StripeCheckout
+                amount={totalAmount * 100}
+                currency="USD"
+                token={onToken}
+                stripeKey="pk_test_51OspoPSFw4w1jr8Yux3ALxyvxTfOY3hQKfqBYeLYf6zH0xJAFXfnvveLr6nSy5kRIwl8RwWaGwgXhQVlvFbIRMly00QWeBUyuT"
+              >
                 <button className="btn btn-primary">Pay Now</button>
-                {/* <StripeCheckout
-                  token={this.onToken}
-                  stripeKey="my_PUBLISHABLE_stripekey"
-                /> */}
-              </div>
+              </StripeCheckout>
             </div>
           </div>
         </div>
       )}
     </div>
   );
-};
+}
 
 export default Bookingscreen;
-
-// import React from 'react';
-
-// const Bookingscreen=(match)=>{
-//   return (
-//     <div>
-//       <h1>Booking screen</h1>
-//       <h1>Room id ={match.params.roomid}</h1>
-//     </div>
-//   )
-// }
-
-// export default Bookingscreen;

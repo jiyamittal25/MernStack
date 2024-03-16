@@ -1,31 +1,36 @@
-import './App.css';
+import { BrowserRouter, Route, Link } from "react-router-dom";
 import React from "react";
-import Navbar from "./components/Navbar";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import logo from "./logo.svg";
 import "./App.css";
-import Homescreen from "./screens/homescreen";
+import Navbar from "./components/Navbar";
+import Homescreen from "./screens/Homescreen";
 import Bookingscreen from "./screens/Bookingscreen";
-import Registerscreen from './screens/Registerscreen';
-import Loginscreen from './screens/Loginscreen';
-const App = () => {
+import RegisterScreen from "./screens/RegisterScreen";
+import LoginScreen from "./screens/LoginScreen";
+import ProfileScreen from "./screens/ProfileScreen";
+import AdminScreen from "./screens/AdminScreen";
+import LandingScreen from "./screens/LandingScreen";
+
+function App() {
   return (
-
-    <>
-      <Router>
-        {" "}
-        <div className="App">
-          <Navbar />
-          <Routes>
-            <Route path="/home" exact Component={Homescreen} />
-            <Route path="/booking" exact Component={Bookingscreen} />
-            <Route path="/register" exact Component={Registerscreen} />
-            <Route path="/login" exact Component={Loginscreen} />
-          </Routes>
-        </div>
-      </Router>
-    </>
-
+    <div className="App">
+      <Navbar />
+      <BrowserRouter>
+        <Route path="/" exact component={LandingScreen} />
+        <Route path="/home" exact component={Homescreen} />
+        <Route
+          path="/book/:roomid/:fromdate/:todate"
+          exact
+          component={Bookingscreen}
+        />
+        <Route path="/register" exact component={RegisterScreen} />
+        <Route path="/login" exact component={LoginScreen} />
+        <Route path="/profile" exact component={ProfileScreen} />
+        <Route path="/bookings" exact component={ProfileScreen} />
+        <Route path="/admin" exact component={AdminScreen} />
+      </BrowserRouter>
+    </div>
   );
-};
+}
 
 export default App;

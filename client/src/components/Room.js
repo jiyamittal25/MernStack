@@ -1,68 +1,67 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Button, Carousel } from "react-bootstrap";
-import {Link} from 'react-router-dom';
+import { BrowserRouter, Route, Link } from "react-router-dom";
 
-const Room = (room) => {
+function Room({ room, fromDate, toDate }) {
+  const [show, setShow] = useState(false);
 
-    const [show, setShow] = useState(false);
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   return (
     <div className="row bs">
       <div className="col-md-4">
-        <img src={room.room.imageurls[0]} className="smallimg" />
+        <img src={room.imageurls[0]} className="smallimg" alt="" />
       </div>
-      <div className="col-md-7 ">
-        <h1>{room.room.name}</h1>
+      <div className="col-md-7">
+        <h1>{room.name}</h1>
         <b>
-          {""}
-          <p>Max Count : {room.room.maxcount}</p>
-          <p>Phone Number : {room.room.phonenumber}</p>
-          <p>Type : {room.room.type}</p>
+          <p>Max Count : {room.maxcount}</p>
+          <p>Phone Number : {room.phonenumber}</p>
+          <p>Type : {room.type}</p>
         </b>
 
         <div style={{ float: "right" }}>
-          <Link to={`/book/${room.room._id}`}>
-            <button className="btn btn-primary mr-2">Book Now </button>
-          </Link>
+          {fromDate && toDate && (
+            <Link to={`/book/${room._id}/${fromDate}/${toDate}`}>
+              <button className="btn btn-primary m-2">Book Now</button>
+            </Link>
+          )}
 
           <button className="btn btn-primary" onClick={handleShow}>
-            View Details
+            View Detail
           </button>
         </div>
       </div>
 
-      <Modal show={show} onHide={handleClose} size="mg">
+      <Modal show={show} onHide={handleClose} size="lg">
         <Modal.Header>
-          <Modal.Title>{room.room.name}</Modal.Title>
+          <Modal.Title>{room.name}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Carousel prevLabel = '' nextLabel=''>
-            {room.room.imageurls.map(url=>{
-                return (
-                  <Carousel.Item>
-                    <img
-                      className="d-block w-100 bigimg"
-                      src={url}
-                    />
-                  </Carousel.Item>
-                );
+          <Carousel prevLabel="" nextLabel="">
+            {room.imageurls.map((url) => {
+              return (
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100 bigimg"
+                    src={url}
+                    alt="First slide"
+                  />
+                </Carousel.Item>
+              );
             })}
           </Carousel>
-          <p>{room.room.description}</p>
+          <p>{room.description}</p>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
         </Modal.Footer>
       </Modal>
     </div>
   );
-};
+}
+
 export default Room;
