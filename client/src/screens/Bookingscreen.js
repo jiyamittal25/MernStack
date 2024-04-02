@@ -31,7 +31,10 @@ function Bookingscreen({ match }) {
             roomid: match.params.roomid,
           })
         ).data;
+<<<<<<< HEAD
         //console.log(data);
+=======
+>>>>>>> a9d551c75f857c6fd35af061259db45f7ab90cc5
         setRoom(data);
       } catch (error) {
         console.log(error);
@@ -63,8 +66,12 @@ function Bookingscreen({ match }) {
 
     try {
       setLoading(true);
+<<<<<<< HEAD
       const result = await axios.post("/api/bookings/bookroom", bookingDetails,token);
       console.log(result);
+=======
+      const result = await axios.post("/api/bookings/bookroom", bookingDetails);
+>>>>>>> a9d551c75f857c6fd35af061259db45f7ab90cc5
       setLoading(false);
       Swal.fire(
         "Congratulations",
