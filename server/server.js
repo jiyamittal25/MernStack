@@ -5,7 +5,13 @@ const dbConfig = require("./db");
 const roomsRoute = require("./routes/roomRoute");
 const usersRoute = require("./routes/userRoute");
 const bookingRoute = require("./routes/bookingRoute");
-
+const cors = require("cors");
+app.use(cors({
+    origin: "https://suitespot-flame.vercel.app",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+  }));
 app.use(express.json());
 app.use("/api/rooms", roomsRoute);
 app.use("/api/users", usersRoute);
