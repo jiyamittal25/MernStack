@@ -13,6 +13,6 @@ app.use("/api/bookings", bookingRoute);
 
 const PORT = process.env.PORT || 5000;
 app.get("/", (req, res) => res.send("Hello World!"));
-app.listen(PORT, () => console.log(`Node app listening on ${port} port!`));
+app.listen(PORT, () => console.log(`Node app listening on ${PORT} port!`));
 
-export default app;
+module.exports = app; // Using CommonJS syntax to export 'app'
