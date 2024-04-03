@@ -76,17 +76,6 @@ function Bookingscreen({ match }) {
       Swal.fire("Opps", "Error:" + error, "error");
     }
     setLoading(false);
-    //TESTING CARD
-    //https://stripe.com/docs/testing
-    //https://www.npmjs.com/package/react-stripe-checkout
-    // fetch("/save-stripe-token", {
-    //   method: "POST",
-    //   body: JSON.stringify(token),
-    // }).then((response) => {
-    //   response.json().then((data) => {
-    //     alert(`We are in business, ${data.email}`);
-    //   });
-    // });
   };
 
   return (
