@@ -1,12 +1,13 @@
 import { BrowserRouter, Route, Link } from "react-router-dom";
 
+import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import Navbar from "./components/Navbar";
-import Homescreen from "./screens/Homescreen";
+import Homescreen from "./screens/homescreen"
 import Bookingscreen from "./screens/Bookingscreen";
-import RegisterScreen from "./screens/RegisterScreen";
-import LoginScreen from "./screens/LoginScreen";
+import RegisterScreen from "./screens/Registerscreen"
+import LoginScreen from "./screens/Loginscreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import AdminScreen from "./screens/AdminScreen";
 import LandingScreen from "./screens/LandingScreen";

@@ -27,10 +27,11 @@ function Bookingscreen({ match }) {
         setError("");
         setLoading(true);
         const data = (
-          await axios.post("/api/rooms/getroombyid", {
+          await axios.post("https://mern-project-6.onrender.com/api/rooms/getroombyid", {
             roomid: match.params.roomid,
           })
         ).data;
+
         setRoom(data);
       } catch (error) {
         console.log(error);
@@ -62,7 +63,9 @@ function Bookingscreen({ match }) {
 
     try {
       setLoading(true);
-      const result = await axios.post("/api/bookings/bookroom", bookingDetails);
+
+      const result = await axios.post("https://mern-project-6.onrender.com/api/bookings/bookroom", bookingDetails);
+
       setLoading(false);
       Swal.fire(
         "Congratulations",
@@ -88,7 +91,11 @@ function Bookingscreen({ match }) {
         <div className="row justify-content-center mt-5 bs">
           <div className="col-md-6">
             <h1>{room.name}</h1>
-            <img src={room.imageurls[0]} alt="" className="bigimg" />
+            {room.imageurls && room.imageurls.length > 0 ? (
+              <img src={room.imageurls[0]} alt={room.name} className="img-fluid mb-3" />
+            ) : (
+              <p>No image available</p>
+            )}
           </div>
           <div className="col-md-6">
             <div style={{ textAlign: "right" }}>

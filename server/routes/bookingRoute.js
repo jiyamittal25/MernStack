@@ -59,12 +59,13 @@ router.post("/bookroom", async (req, res) => {
 
     try {
       //create customer
+
       const customer = await stripe.customers.create({
         email: token.email,
         source: token.id,
       });
 
-      //charge payment
+      // charge payment
       const payment = await stripe.paymentIntents.create(
         {
           amount: totalAmount * 100,
@@ -77,7 +78,7 @@ router.post("/bookroom", async (req, res) => {
         }
       );
 
-      //Payment Success
+      // Payment Success
       if (payment) {
         try {
           const newBooking = new Booking({
