@@ -13,6 +13,7 @@ Admin Panel: An admin user can manage hotel listings, view existing bookings, se
 # Usage
 Installation
 1. Clone this repository to your local machine.
+   
    git clone https://github.com/your-username/suite-spot.git
 
 3. Navigate to the project directory.
