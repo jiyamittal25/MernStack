@@ -28,7 +28,7 @@ Setup
 3. Start the server.
 
    npm start
-# Open your web browser and go to http://localhost:3000 to access the application.
+   **<small># Open your web browser and go to http://localhost:3000 to access the application.</small>**
 
 
 # User Actions
