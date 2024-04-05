@@ -17,13 +17,16 @@ Installation
    git clone https://github.com/your-username/suite-spot.git
 
 3. Navigate to the project directory.
+
    cd suite-spot
 
 Setup
 1. Install dependencies.
+
    npm install
    
-2. Start the server.
+3. Start the server.
+
    npm start
   Open your web browser and go to http://localhost:3000 to access the application.
 
