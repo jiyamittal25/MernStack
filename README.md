@@ -52,6 +52,11 @@ Manage Users: View all users registered in the system.
 
 # Technologies Used
 1.Frontend: HTML, CSS, JavaScript, React
+
 2.Backend: Node.js, Express.js
+
 3.Database: MongoDB
+
 4.Payment Gateway: Stripe
+
+
